@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #0f172a;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container,
+.landing-container {
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  margin-bottom: 40px;
+  color: #94a3b8;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.nav-btn,
+button {
+  background: #2563eb;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+button:hover,
+.nav-btn:hover {
+  transform: scale(1.05);
+}
+
+.host-btn {
+  background: #dc2626;
+}
+
+.auction-card {
+  background: #111827;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+}
+
+.timer {
+  font-size: 60px;
+  margin: 20px 0;
+  color: gold;
+  font-weight: bold;
+}
+
+.bid-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  background: #111827;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.host-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.team-info {
+  background: #111827;
+  padding: 20px;
+  border-radius: 20px;
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Host Panel</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎯 Host Panel</h1>
+
+      <div class="auction-card">
+        <h2 id="playerName">No Player Selected</h2>
+
+        <h3 id="currentBid">Current Bid: 0</h3>
+
+        <h3 id="highestBidder">Highest Bidder: None</h3>
+
+        <div class="timer" id="timer">--</div>
+
+        <div class="host-controls">
+          <button id="nextPlayerBtn">Next Player</button>
+
+          <button id="pauseBtn">Pause</button>
+
+          <button id="resumeBtn">Resume</button>
+
+          <button id="unsoldBtn">Unsold</button>
+
+          <button id="newAuctionBtn">New Auction</button>
+        </div>
+      </div>
+
+      <div class="team-grid" id="teamsContainer"></div>
+    </div>
+
+    <script type="module" src="./js/host.js"></script>
+  </body>
+</html>

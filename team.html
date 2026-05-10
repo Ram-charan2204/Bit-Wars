@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Team Panel</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="teamTitle">Team</h1>
+
+      <div class="auction-card">
+        <h2 id="playerName">Waiting...</h2>
+
+        <h3 id="currentBid">Current Bid: 0</h3>
+
+        <h3 id="highestBidder">Highest Bidder: None</h3>
+
+        <div class="timer" id="timer">--</div>
+
+        <div class="bid-buttons">
+          <button id="bid10">+10</button>
+
+          <button id="bid50">+50</button>
+
+          <button id="bid100">+100</button>
+        </div>
+      </div>
+
+      <div class="team-info">
+        <h2>Purse: <span id="teamPurse">0</span></h2>
+      </div>
+    </div>
+
+    <script type="module" src="./js/team.js"></script>
+  </body>
+</html>
