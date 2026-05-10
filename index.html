@@ -2,26 +2,42 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auction Arena</title>
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <title>Auction Web</title>
   </head>
+
   <body>
-    <div class="landing-container">
-      <h1>🏆 Auction Arena</h1>
+    <h1>Loading...</h1>
 
-      <p class="subtitle">Multiplayer Realtime Auction System</p>
+    <script type="module">
+      import { app } from "./Js/firebase-config.js";
 
-      <div class="button-group">
-        <a href="host.html" class="nav-btn host-btn"> HOST PANEL </a>
+      import {
+        getAuth,
+        onAuthStateChanged,
+      } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        <a href="team.html?team=teamA" class="nav-btn"> TEAM A </a>
+      const auth = getAuth(app);
 
-        <a href="team.html?team=teamB" class="nav-btn"> TEAM B </a>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const email = user.email;
 
-        <a href="team.html?team=teamC" class="nav-btn"> TEAM C </a>
-      </div>
-    </div>
+          if (email === "ramcharancherry338gmail.com") {
+            window.location.href = "host.html";
+          } else if (email === "rishicherry015@gmail.com") {
+            window.location.href = "team.html?team=teamA";
+          } else if (email === "ramcharancherry2204@gmail.com") {
+            window.location.href = "team.html?team=teamB";
+          } else if (email === "rkyadav7981@gmail.com") {
+            window.location.href = "team.html?team=teamC";
+          }
+        } else {
+          window.location.href = "login.html";
+        }
+      });
+    </script>
   </body>
 </html>
