@@ -48,17 +48,17 @@ async function resetAuction() {
   await set(remainingPlayersRef, shuffledPlayers);
 
   await update(ref(db, "teams/teamA"), {
-    purse: 10000,
+    purse: 20000,
     players: [],
   });
 
   await update(ref(db, "teams/teamB"), {
-    purse: 10000,
+    purse: 20000,
     players: [],
   });
 
   await update(ref(db, "teams/teamC"), {
-    purse: 10000,
+    purse: 20000,
     players: [],
   });
 
