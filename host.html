@@ -2,14 +2,338 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>Host Panel</title>
 
-    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+
+        padding: 0;
+
+        box-sizing: border-box;
+
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+
+        background: linear-gradient(135deg, #060b26, #0d1b45, #091540);
+
+        color: white;
+
+        overflow-x: hidden;
+
+        padding: 30px;
+      }
+
+      body::before {
+        content: "";
+
+        position: fixed;
+
+        width: 450px;
+
+        height: 450px;
+
+        background: rgba(108, 140, 255, 0.18);
+
+        border-radius: 50%;
+
+        top: -100px;
+
+        left: -100px;
+
+        filter: blur(120px);
+
+        z-index: -1;
+      }
+
+      body::after {
+        content: "";
+
+        position: fixed;
+
+        width: 450px;
+
+        height: 450px;
+
+        background: rgba(255, 80, 160, 0.12);
+
+        border-radius: 50%;
+
+        bottom: -100px;
+
+        right: -100px;
+
+        filter: blur(120px);
+
+        z-index: -1;
+      }
+
+      .container {
+        width: 100%;
+
+        max-width: 1400px;
+
+        margin: auto;
+      }
+
+      .header {
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 30px;
+
+        flex-wrap: wrap;
+
+        gap: 15px;
+      }
+
+      .header h1 {
+        font-size: 42px;
+
+        font-weight: 700;
+      }
+
+      .live-badge {
+        background: rgba(255, 255, 255, 0.08);
+
+        padding: 10px 18px;
+
+        border-radius: 999px;
+
+        color: #cfd7ff;
+
+        font-size: 14px;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .auction-card {
+        width: 100%;
+
+        padding: 45px;
+
+        border-radius: 28px;
+
+        background: rgba(255, 255, 255, 0.06);
+
+        backdrop-filter: blur(18px);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+
+        text-align: center;
+
+        margin-bottom: 40px;
+      }
+
+      #playerName {
+        font-size: 52px;
+
+        margin-bottom: 15px;
+
+        font-weight: 700;
+      }
+
+      #currentBid {
+        font-size: 30px;
+
+        color: #8db8ff;
+
+        margin-bottom: 10px;
+      }
+
+      #highestBidder {
+        font-size: 24px;
+
+        color: #d4dcff;
+
+        margin-bottom: 35px;
+      }
+
+      .timer {
+        width: 140px;
+
+        height: 140px;
+
+        border-radius: 50%;
+
+        margin: auto;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        font-size: 42px;
+
+        font-weight: 700;
+
+        background: radial-gradient(circle, #6a7dff, #4b56d2);
+
+        box-shadow: 0 10px 35px rgba(108, 140, 255, 0.35);
+
+        margin-bottom: 35px;
+      }
+
+      .host-controls {
+        display: flex;
+
+        justify-content: center;
+
+        flex-wrap: wrap;
+
+        gap: 18px;
+      }
+
+      .host-controls button {
+        padding: 15px 28px;
+
+        border: none;
+
+        border-radius: 16px;
+
+        background: linear-gradient(135deg, #6a7dff, #8b5cff);
+
+        color: white;
+
+        font-size: 15px;
+
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition: 0.3s;
+
+        min-width: 160px;
+      }
+
+      .host-controls button:hover {
+        transform: translateY(-3px);
+
+        box-shadow: 0 10px 25px rgba(108, 140, 255, 0.35);
+      }
+
+      .team-grid {
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+
+        gap: 25px;
+      }
+
+      .team-card {
+        padding: 28px;
+
+        border-radius: 24px;
+
+        background: rgba(255, 255, 255, 0.05);
+
+        backdrop-filter: blur(14px);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        transition: 0.3s;
+      }
+
+      .team-card:hover {
+        transform: translateY(-5px);
+
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      .team-card h2 {
+        font-size: 30px;
+
+        margin-bottom: 10px;
+      }
+
+      .team-card h3 {
+        color: #8db8ff;
+
+        margin-bottom: 18px;
+      }
+
+      .team-card h4 {
+        margin-bottom: 14px;
+
+        color: #d7deff;
+      }
+
+      .team-card ul {
+        list-style: none;
+      }
+
+      .team-card li {
+        padding: 12px;
+
+        margin-bottom: 10px;
+
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.06);
+
+        color: #eef2ff;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 18px;
+        }
+
+        #playerName {
+          font-size: 34px;
+        }
+
+        #currentBid {
+          font-size: 24px;
+        }
+
+        .timer {
+          width: 110px;
+
+          height: 110px;
+
+          font-size: 34px;
+        }
+
+        .host-controls button {
+          width: 100%;
+        }
+
+        .auction-card {
+          padding: 30px 20px;
+        }
+      }
+    </style>
   </head>
+
   <body>
     <div class="container">
-      <h1>🎯 Host Panel</h1>
+      <div class="header">
+        <h1>🎯 Host Panel</h1>
+
+        <div class="live-badge">LIVE AUCTION CONTROL</div>
+      </div>
 
       <div class="auction-card">
         <h2 id="playerName">No Player Selected</h2>
