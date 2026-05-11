@@ -86,7 +86,7 @@
       .container {
         width: 100%;
 
-        max-width: 900px;
+        max-width: 1200px;
 
         margin: auto;
       }
@@ -126,7 +126,7 @@
       }
 
       .auction-card {
-        padding: 45px;
+        padding: 40px;
 
         border-radius: 28px;
 
@@ -138,15 +138,85 @@
 
         box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
 
-        text-align: center;
-
         margin-bottom: 30px;
       }
 
-      #playerName {
-        font-size: 52px;
+      .player-card {
+        display: flex;
 
-        margin-bottom: 15px;
+        gap: 35px;
+
+        align-items: center;
+
+        flex-wrap: wrap;
+
+        margin-bottom: 35px;
+      }
+
+      .player-image {
+        width: 230px;
+
+        height: 230px;
+
+        object-fit: cover;
+
+        border-radius: 28px;
+
+        border: 4px solid rgba(255, 255, 255, 0.1);
+
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+      }
+
+      .player-stats {
+        flex: 1;
+
+        min-width: 320px;
+      }
+
+      #playerName {
+        font-size: 48px;
+
+        margin-bottom: 12px;
+      }
+
+      #basePrice {
+        color: #8db8ff;
+
+        margin-bottom: 25px;
+
+        font-size: 22px;
+      }
+
+      .stats-grid {
+        display: grid;
+
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+
+        gap: 15px;
+      }
+
+      .stat-box {
+        background: rgba(255, 255, 255, 0.06);
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+        text-align: center;
+      }
+
+      .stat-box h4 {
+        color: #9fb5ff;
+
+        margin-bottom: 10px;
+
+        font-size: 14px;
+      }
+
+      .stat-box p {
+        font-size: 24px;
 
         font-weight: 700;
       }
@@ -157,6 +227,8 @@
         color: #8db8ff;
 
         margin-bottom: 10px;
+
+        text-align: center;
       }
 
       #highestBidder {
@@ -165,6 +237,8 @@
         color: #d4dcff;
 
         margin-bottom: 35px;
+
+        text-align: center;
       }
 
       .timer {
@@ -247,51 +321,65 @@
 
       .team-info h2 {
         font-size: 34px;
-
-        margin-bottom: 15px;
       }
 
       #teamPurse {
         color: #8db8ff;
       }
 
-      .wallet-icon {
-        font-size: 45px;
+      .sold-modal {
+        position: fixed;
 
-        margin-bottom: 10px;
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.85);
+
+        display: none;
+
+        justify-content: center;
+
+        align-items: center;
+
+        z-index: 9999;
+      }
+
+      .sold-box {
+        width: 90%;
+
+        max-width: 500px;
+
+        padding: 40px;
+
+        border-radius: 30px;
+
+        background: linear-gradient(135deg, #101b4d, #16245f);
+
+        text-align: center;
+      }
+
+      .hammer-img {
+        width: 180px;
+
+        margin-bottom: 20px;
       }
 
       @media (max-width: 768px) {
-        body {
-          padding: 18px;
-        }
-
-        #teamTitle {
-          font-size: 34px;
+        .player-card {
+          justify-content: center;
         }
 
         #playerName {
-          font-size: 34px;
+          font-size: 36px;
         }
 
-        #currentBid {
-          font-size: 24px;
-        }
+        .player-image {
+          width: 180px;
 
-        .timer {
-          width: 110px;
-
-          height: 110px;
-
-          font-size: 34px;
+          height: 180px;
         }
 
         .bid-buttons button {
           width: 100%;
-        }
-
-        .auction-card {
-          padding: 30px 20px;
         }
       }
     </style>
@@ -306,7 +394,58 @@
       </div>
 
       <div class="auction-card">
-        <h2 id="playerName">Waiting...</h2>
+        <div class="player-card">
+          <img
+            id="playerImage"
+            class="player-image"
+            src="./Assets/default.png"
+            alt="player"
+          />
+
+          <div class="player-stats">
+            <h2 id="playerName">Waiting...</h2>
+
+            <h3 id="basePrice">Base Price</h3>
+
+            <div class="stats-grid">
+              <div class="stat-box">
+                <h4>Runs</h4>
+
+                <p id="runs">0</p>
+              </div>
+
+              <div class="stat-box">
+                <h4>Strike Rate</h4>
+
+                <p id="strikeRate">0</p>
+              </div>
+
+              <div class="stat-box">
+                <h4>Average</h4>
+
+                <p id="average">0</p>
+              </div>
+
+              <div class="stat-box">
+                <h4>Wickets</h4>
+
+                <p id="wickets">0</p>
+              </div>
+
+              <div class="stat-box">
+                <h4>Economy</h4>
+
+                <p id="economy">0</p>
+              </div>
+
+              <div class="stat-box">
+                <h4>Sixes</h4>
+
+                <p id="sixes">0</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <h3 id="currentBid">Current Bid: 0</h3>
 
@@ -324,12 +463,24 @@
       </div>
 
       <div class="team-info">
-        <div class="wallet-icon">💰</div>
-
         <h2>
-          Purse:
+          💰 Purse:
           <span id="teamPurse"> 0 </span>
         </h2>
+      </div>
+    </div>
+
+    <div id="soldModal" class="sold-modal">
+      <div class="sold-box">
+        <img src="./Assets/hammer.gif" class="hammer-img" />
+
+        <h1>🔨 SOLD 🔨</h1>
+
+        <h2 id="soldPlayer"></h2>
+
+        <h3 id="soldTeam"></h3>
+
+        <h3 id="soldPrice"></h3>
       </div>
     </div>
 

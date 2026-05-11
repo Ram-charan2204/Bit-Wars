@@ -30,6 +30,14 @@ const unsoldBtn = document.getElementById("unsoldBtn");
 
 const newAuctionBtn = document.getElementById("newAuctionBtn");
 
+const soldModal = document.getElementById("soldModal");
+
+const soldPlayer = document.getElementById("soldPlayer");
+
+const soldTeam = document.getElementById("soldTeam");
+
+const soldPrice = document.getElementById("soldPrice");
+
 let timerInterval;
 
 nextPlayerBtn.addEventListener("click", nextPlayer);
@@ -47,18 +55,39 @@ async function resetAuction() {
 
   await set(remainingPlayersRef, shuffledPlayers);
 
+  const statusObject = {};
+
+  shuffledPlayers.forEach((player) => {
+    statusObject[player.id] = {
+      name: player.name,
+
+      basePrice: player.basePrice,
+
+      status: "UPCOMING",
+
+      team: "",
+
+      price: 0,
+    };
+  });
+
+  await set(ref(db, "playerStatus"), statusObject);
+
   await update(ref(db, "teams/teamA"), {
     purse: 20000,
+
     players: [],
   });
 
   await update(ref(db, "teams/teamB"), {
     purse: 20000,
+
     players: [],
   });
 
   await update(ref(db, "teams/teamC"), {
     purse: 20000,
+
     players: [],
   });
 
@@ -78,6 +107,8 @@ async function resetAuction() {
 
   await set(historyRef, []);
 
+  await set(ref(db, "lastSold"), null);
+
   alert("New Auction Started");
 }
 
@@ -96,6 +127,10 @@ async function nextPlayer() {
 
   await set(remainingPlayersRef, remainingPlayers);
 
+  await update(ref(db, `playerStatus/${selectedPlayer.id}`), {
+    status: "LIVE",
+  });
+
   await update(auctionRef, {
     currentPlayer: selectedPlayer,
 
@@ -110,7 +145,10 @@ async function nextPlayer() {
     paused: false,
   });
 
-  addHistory(`${selectedPlayer.name} entered auction`);
+  addHistory(
+    `${selectedPlayer.name}
+     entered auction`,
+  );
 }
 
 async function pauseAuction() {
@@ -132,7 +170,14 @@ async function markUnsold() {
 
   if (!data.currentPlayer) return;
 
-  addHistory(`${data.currentPlayer.name} went UNSOLD`);
+  await update(ref(db, `playerStatus/${data.currentPlayer.id}`), {
+    status: "UNSOLD",
+  });
+
+  addHistory(
+    `${data.currentPlayer.name}
+     went UNSOLD`,
+  );
 
   await update(auctionRef, {
     status: "UNSOLD",
@@ -184,6 +229,24 @@ async function sellPlayer() {
     purse: team.purse - auction.currentBid,
 
     players: updatedPlayers,
+  });
+
+  await update(ref(db, `playerStatus/${auction.currentPlayer.id}`), {
+    status: "SOLD",
+
+    team: auction.highestBidder,
+
+    price: auction.currentBid,
+  });
+
+  await set(ref(db, "lastSold"), {
+    player: auction.currentPlayer.name,
+
+    team: auction.highestBidder,
+
+    price: auction.currentBid,
+
+    time: Date.now(),
   });
 
   addHistory(
@@ -260,7 +323,7 @@ onValue(auctionRef, (snapshot) => {
         await markUnsold();
       }
     }
-  }, 1000);
+  }, 200);
 });
 
 onValue(teamsRef, (snapshot) => {
@@ -278,10 +341,10 @@ onValue(teamsRef, (snapshot) => {
       .map(
         (player) =>
           `<li>
-            ${player.name}
-            -
-            ${player.price}
-          </li>`,
+              ${player.name}
+              -
+              ${player.price}
+            </li>`,
       )
 
       .join("");
@@ -292,20 +355,42 @@ onValue(teamsRef, (snapshot) => {
 
     div.innerHTML = `
 
-        <h2>${team.name}</h2>
+          <h2>
+            ${team.name}
+          </h2>
 
-        <h3>
-          Purse:
-          ${team.purse}
-        </h3>
+          <h3>
+            Purse:
+            ${team.purse}
+          </h3>
 
-        <h4>Squad</h4>
+          <h4>
+            Squad
+          </h4>
 
-        <ul>
-          ${playersHTML}
-        </ul>
-      `;
+          <ul>
+            ${playersHTML}
+          </ul>
+        `;
 
     container.appendChild(div);
   });
+});
+
+onValue(ref(db, "lastSold"), (snapshot) => {
+  const data = snapshot.val();
+
+  if (!data) return;
+
+  soldPlayer.innerText = data.player;
+
+  soldTeam.innerText = `Won By ${data.team}`;
+
+  soldPrice.innerText = `For ${data.price}`;
+
+  soldModal.style.display = "flex";
+
+  setTimeout(() => {
+    soldModal.style.display = "none";
+  }, 4000);
 });

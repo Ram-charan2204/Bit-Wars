@@ -26,6 +26,30 @@ const bid50 = document.getElementById("bid50");
 
 const bid100 = document.getElementById("bid100");
 
+const playerImage = document.getElementById("playerImage");
+
+const basePrice = document.getElementById("basePrice");
+
+const runs = document.getElementById("runs");
+
+const strikeRate = document.getElementById("strikeRate");
+
+const average = document.getElementById("average");
+
+const wickets = document.getElementById("wickets");
+
+const economy = document.getElementById("economy");
+
+const sixes = document.getElementById("sixes");
+
+const soldModal = document.getElementById("soldModal");
+
+const soldPlayer = document.getElementById("soldPlayer");
+
+const soldTeam = document.getElementById("soldTeam");
+
+const soldPrice = document.getElementById("soldPrice");
+
 let timerInterval;
 
 let currentAuction = null;
@@ -65,9 +89,28 @@ onValue(auctionRef, (snapshot) => {
 
   playerName.innerText = data.currentPlayer.name;
 
-  currentBid.innerText = `Current Bid: ${data.currentBid}`;
+  currentBid.innerText = `Current Bid:
+       ${data.currentBid}`;
 
-  highestBidder.innerText = `Highest Bidder: ${data.highestBidder || "None"}`;
+  highestBidder.innerText = `Highest Bidder:
+       ${data.highestBidder || "None"}`;
+
+  playerImage.src = data.currentPlayer.image || "./Assets/default.png";
+
+  basePrice.innerText = `Base Price:
+       ${data.currentPlayer.basePrice}`;
+
+  runs.innerText = data.currentPlayer.batting?.runs || 0;
+
+  strikeRate.innerText = data.currentPlayer.batting?.sr || 0;
+
+  average.innerText = data.currentPlayer.batting?.avg || 0;
+
+  wickets.innerText = data.currentPlayer.bowling?.wickets || 0;
+
+  economy.innerText = data.currentPlayer.bowling?.eco || 0;
+
+  sixes.innerText = data.currentPlayer.batting?.sixes || 0;
 
   const isHighestBidder = data.highestBidder === currentTeam?.name;
 
@@ -141,3 +184,21 @@ bid10.addEventListener("click", () => placeBid(10));
 bid50.addEventListener("click", () => placeBid(50));
 
 bid100.addEventListener("click", () => placeBid(100));
+
+onValue(ref(db, "lastSold"), (snapshot) => {
+  const data = snapshot.val();
+
+  if (!data) return;
+
+  soldPlayer.innerText = data.player;
+
+  soldTeam.innerText = `Won By ${data.team}`;
+
+  soldPrice.innerText = `For ${data.price}`;
+
+  soldModal.style.display = "flex";
+
+  setTimeout(() => {
+    soldModal.style.display = "none";
+  }, 4000);
+});
