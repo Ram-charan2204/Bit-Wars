@@ -4,8 +4,6 @@ import { getRemainingTime } from "./timer.js";
 
 const auctionRef = ref(db, "auction");
 
-const teamsRef = ref(db, "teams");
-
 const urlParams = new URLSearchParams(window.location.search);
 
 const teamKey = urlParams.get("team");
@@ -71,7 +69,9 @@ onValue(auctionRef, (snapshot) => {
 
   highestBidder.innerText = `Highest Bidder: ${data.highestBidder || "None"}`;
 
-  disableButtons(false);
+  const isHighestBidder = data.highestBidder === currentTeam?.name;
+
+  disableButtons(isHighestBidder);
 
   clearInterval(timerInterval);
 
@@ -94,6 +94,14 @@ function disableButtons(state) {
   bid50.disabled = state;
 
   bid100.disabled = state;
+
+  const opacity = state ? "0.5" : "1";
+
+  bid10.style.opacity = opacity;
+
+  bid50.style.opacity = opacity;
+
+  bid100.style.opacity = opacity;
 }
 
 async function placeBid(amount) {
@@ -103,6 +111,12 @@ async function placeBid(amount) {
 
   if (!currentTeam) return;
 
+  if (currentAuction.highestBidder === currentTeam.name) {
+    alert("You already have the highest bid");
+
+    return;
+  }
+
   const newBid = currentAuction.currentBid + amount;
 
   if (newBid > currentTeam.purse) {
@@ -110,6 +124,8 @@ async function placeBid(amount) {
 
     return;
   }
+
+  disableButtons(true);
 
   await update(auctionRef, {
     currentBid: newBid,
