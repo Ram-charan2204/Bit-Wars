@@ -2,49 +2,76 @@ import { db, ref, update, onValue, get } from "./firebase-config.js";
 
 import { getRemainingTime } from "./timer.js";
 
-const params = new URLSearchParams(window.location.search);
-
-const teamId = params.get("team");
-
 const auctionRef = ref(db, "auction");
-const teamRef = ref(db, `teams/${teamId}`);
 
-const playerName = document.getElementById("playerName");
-const currentBid = document.getElementById("currentBid");
-const highestBidder = document.getElementById("highestBidder");
-const timerElement = document.getElementById("timer");
-const teamPurse = document.getElementById("teamPurse");
+const teamsRef = ref(db, "teams");
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const teamKey = urlParams.get("team");
+
 const teamTitle = document.getElementById("teamTitle");
 
+const playerName = document.getElementById("playerName");
+
+const currentBid = document.getElementById("currentBid");
+
+const highestBidder = document.getElementById("highestBidder");
+
+const timerElement = document.getElementById("timer");
+
+const teamPurse = document.getElementById("teamPurse");
+
 const bid10 = document.getElementById("bid10");
+
 const bid50 = document.getElementById("bid50");
+
 const bid100 = document.getElementById("bid100");
 
-let latestAuctionData = null;
 let timerInterval;
 
-onValue(teamRef, (snapshot) => {
-  const team = snapshot.val();
+let currentAuction = null;
 
-  if (!team) return;
+let currentTeam = null;
 
-  teamTitle.innerText = team.name;
+onValue(ref(db, `teams/${teamKey}`), (snapshot) => {
+  currentTeam = snapshot.val();
 
-  teamPurse.innerText = team.purse;
+  if (!currentTeam) return;
+
+  teamTitle.innerText = currentTeam.name;
+
+  teamPurse.innerText = currentTeam.purse;
 });
 
 onValue(auctionRef, (snapshot) => {
   const data = snapshot.val();
 
-  if (!data || !data.currentPlayer) return;
+  currentAuction = data;
 
-  latestAuctionData = data;
+  if (!data) return;
+
+  if (!data.currentPlayer) {
+    playerName.innerText = "Waiting...";
+
+    currentBid.innerText = "Current Bid: 0";
+
+    highestBidder.innerText = "Highest Bidder: None";
+
+    timerElement.innerText = "--";
+
+    disableButtons(true);
+
+    return;
+  }
 
   playerName.innerText = data.currentPlayer.name;
 
-  currentBid.innerText = "Current Bid: " + data.currentBid;
+  currentBid.innerText = `Current Bid: ${data.currentBid}`;
 
-  highestBidder.innerText = "Highest Bidder: " + (data.highestBidder || "None");
+  highestBidder.innerText = `Highest Bidder: ${data.highestBidder || "None"}`;
+
+  disableButtons(false);
 
   clearInterval(timerInterval);
 
@@ -52,39 +79,49 @@ onValue(auctionRef, (snapshot) => {
     const remaining = getRemainingTime(data.timerEnd);
 
     timerElement.innerText = remaining;
-  }, 1000);
+
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+
+      disableButtons(true);
+    }
+  }, 200);
 });
 
-bid10.addEventListener("click", () => placeBid(10));
-bid50.addEventListener("click", () => placeBid(50));
-bid100.addEventListener("click", () => placeBid(100));
+function disableButtons(state) {
+  bid10.disabled = state;
 
-async function placeBid(increment) {
-  if (!latestAuctionData) return;
+  bid50.disabled = state;
 
-  const teamSnapshot = await get(teamRef);
+  bid100.disabled = state;
+}
 
-  const team = teamSnapshot.val();
+async function placeBid(amount) {
+  if (!currentAuction) return;
 
-  const nextBid = latestAuctionData.currentBid + increment;
+  if (!currentAuction.currentPlayer) return;
 
-  if (nextBid > team.purse) {
-    alert("Not enough purse");
+  if (!currentTeam) return;
+
+  const newBid = currentAuction.currentBid + amount;
+
+  if (newBid > currentTeam.purse) {
+    alert("Insufficient purse");
 
     return;
   }
 
-  if (latestAuctionData.highestBidder === team.name) {
-    return;
-  }
+  await update(auctionRef, {
+    currentBid: newBid,
 
-  update(auctionRef, {
-    currentBid: nextBid,
-
-    highestBidder: team.name,
+    highestBidder: currentTeam.name,
 
     timerEnd: Date.now() + 10000,
-
-    status: "LIVE",
   });
 }
+
+bid10.addEventListener("click", () => placeBid(10));
+
+bid50.addEventListener("click", () => placeBid(50));
+
+bid100.addEventListener("click", () => placeBid(100));
