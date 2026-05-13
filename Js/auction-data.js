@@ -1,106 +1,275 @@
 export const players = [
   {
-    name: "Vijay",
-    basePrice: 1200,
-  },
-
-  {
-    name: "Rishi",
-    basePrice: 1200,
-  },
-
-  {
-    name: "Samee",
-    basePrice: 1200,
-  },
-
-  {
-    name: "Ram Charan",
-    basePrice: 1000,
-  },
-
-  {
-    name: "Rohan",
-    basePrice: 1000,
-  },
-
-  {
-    name: "Lenin",
-    basePrice: 1000,
-  },
-
-  {
-    name: "Chetan",
-    basePrice: 900,
-  },
-
-  {
-    name: "Ravi",
-    basePrice: 900,
-  },
-
-  {
-    name: "Lokesh",
-    basePrice: 900,
-  },
-
-  {
-    name: "Ankith",
-    basePrice: 800,
-  },
-
-  {
-    name: "Aneesh",
-    basePrice: 800,
-  },
-
-  {
-    name: "Pavan Teja",
-    basePrice: 900,
-  },
-
-  {
-    name: "Vardhan",
-    basePrice: 600,
-  },
-
-  {
-    name: "Sathwik",
-    basePrice: 800,
-  },
-
-  {
     name: "Gandhi",
     basePrice: 1000,
+    batting: { runs: 39, sr: 78.0, avg: 19.5, sixes: 2, fours: 6 },
+    bowling: {
+      overs: 3.0,
+      wickets: 2,
+      runs_conceded: 13,
+      maidens: 0,
+      eco: 4.33,
+      sr: 9.0,
+    },
   },
-
-  {
-    name: "Bhargav",
-    basePrice: 1000,
-  },
-
-  {
-    name: "Snehith",
-    basePrice: 600,
-  },
-
-  {
-    name: "Koushik",
-    basePrice: 600,
-  },
-
   {
     name: "Akhil",
     basePrice: 800,
+    batting: { runs: 2, sr: 28.57, avg: 2.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 3.0,
+      wickets: 7,
+      runs_conceded: 4,
+      maidens: 0,
+      eco: 1.33,
+      sr: 2.57,
+    },
   },
-
   {
-    name: "Nishikanth",
-    basePrice: 600,
+    name: "Rishi",
+    basePrice: 1200,
+    batting: { runs: 26, sr: 118.18, avg: 8.67, sixes: 1, fours: 4 },
+    bowling: {
+      overs: 5.0,
+      wickets: 1,
+      runs_conceded: 11,
+      maidens: 3,
+      eco: 2.2,
+      sr: 30.0,
+    },
   },
-
   {
-    name: "Jitender",
+    name: "Jithendhar Reddy",
+    basePrice: 900,
+    batting: { runs: 30, sr: 120.0, avg: 15.0, sixes: 3, fours: 0 },
+    bowling: {
+      overs: 3.0,
+      wickets: 1,
+      runs_conceded: 15,
+      maidens: 0,
+      eco: 5.0,
+      sr: 18.0,
+    },
+  },
+  {
+    name: "Abdus Samee",
+    basePrice: 1200,
+    batting: { runs: 28, sr: 186.67, avg: 28.0, sixes: 3, fours: 2 },
+    bowling: {
+      overs: 2.0,
+      wickets: 1,
+      runs_conceded: 3,
+      maidens: 0,
+      eco: 1.5,
+      sr: 12.0,
+    },
+  },
+  {
+    name: "Pavan Teja",
+    basePrice: 900,
+    batting: { runs: 27, sr: 108.0, avg: 13.5, sixes: 3, fours: 2 },
+    bowling: {
+      overs: 2.0,
+      wickets: 1,
+      runs_conceded: 0,
+      maidens: 1,
+      eco: 0.0,
+      sr: 12.0,
+    },
+  },
+  {
+    name: "Hemanth",
     basePrice: 1000,
+    batting: { runs: 24, sr: 184.62, avg: 24.0, sixes: 2, fours: 3 },
+    bowling: {
+      overs: 0,
+      wickets: 0,
+      runs_conceded: 0,
+      maidens: 0,
+      eco: 0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Sai Bhargav",
+    basePrice: 1000,
+    batting: { runs: 1, sr: 8.33, avg: 0.25, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 5.0,
+      wickets: 4,
+      runs_conceded: 32,
+      maidens: 0,
+      eco: 6.4,
+      sr: 7.5,
+    },
+  },
+  {
+    name: "Satha Ankith",
+    basePrice: 800,
+    batting: { runs: 3, sr: 37.5, avg: 3.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 3.0,
+      wickets: 2,
+      runs_conceded: 13,
+      maidens: 1,
+      eco: 4.33,
+      sr: 9.0,
+    },
+  },
+  {
+    name: "Ram Charan",
+    basePrice: 1000,
+    batting: { runs: 4, sr: 80.0, avg: 4.0, sixes: 0, fours: 1 },
+    bowling: {
+      overs: 3.0,
+      wickets: 1,
+      runs_conceded: 11,
+      maidens: 0,
+      eco: 3.67,
+      sr: 18.0,
+    },
+  },
+  {
+    name: "Ravi Chandra",
+    basePrice: 900,
+    batting: { runs: 24, sr: 52.17, avg: 24.0, sixes: 0, fours: 3 },
+    bowling: {
+      overs: 0,
+      wickets: 0,
+      runs_conceded: 0,
+      maidens: 0,
+      eco: 0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Gandiyala Kaushik",
+    basePrice: 600,
+    batting: { runs: 7, sr: 53.85, avg: 2.33, sixes: 1, fours: 0 },
+    bowling: {
+      overs: 3.0,
+      wickets: 1,
+      runs_conceded: 19,
+      maidens: 0,
+      eco: 6.33,
+      sr: 18.0,
+    },
+  },
+  {
+    name: "Rohan Kumar",
+    basePrice: 1000,
+    batting: { runs: 0, sr: 0.0, avg: 0.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 0,
+      runs_conceded: 13,
+      maidens: 0,
+      eco: 6.5,
+      sr: 0,
+    },
+  },
+  {
+    name: "P Sathwik",
+    basePrice: 800,
+    batting: { runs: 10, sr: 142.86, avg: 10.0, sixes: 2, fours: 0 },
+    bowling: {
+      overs: 1.2,
+      wickets: 0,
+      runs_conceded: 5,
+      maidens: 0,
+      eco: 3.75,
+      sr: 0,
+    },
+  },
+  {
+    name: "V Vijay",
+    basePrice: 1200,
+    batting: { runs: 0, sr: 0.0, avg: 0.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 0,
+      runs_conceded: 20,
+      maidens: 0,
+      eco: 10.0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Chetan Kumar",
+    basePrice: 900,
+    batting: { runs: 0, sr: 0.0, avg: 0.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 0,
+      runs_conceded: 12,
+      maidens: 0,
+      eco: 6.0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Aneesh P",
+    basePrice: 800,
+    batting: { runs: 0, sr: 0.0, avg: 0.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 0,
+      runs_conceded: 12,
+      maidens: 0,
+      eco: 6.0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Snehith Chityala",
+    basePrice: 600,
+    batting: { runs: 7, sr: 29.17, avg: 2.33, sixes: 1, fours: 0 },
+    bowling: {
+      overs: 3.0,
+      wickets: 0,
+      runs_conceded: 41,
+      maidens: 0,
+      eco: 13.67,
+      sr: 0,
+    },
+  },
+  {
+    name: "Sai Lenin",
+    basePrice: 600,
+    batting: { runs: 5, sr: 500.0, avg: 5.0, sixes: 1, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 0,
+      runs_conceded: 8,
+      maidens: 0,
+      eco: 4.0,
+      sr: 0,
+    },
+  },
+  {
+    name: "Nishikanth Sanga",
+    basePrice: 600,
+    batting: { runs: 1, sr: 100.0, avg: 1.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 0,
+      wickets: 0,
+      runs_conceded: 0,
+      maidens: 0,
+      eco: 0,
+      sr: 0,
+    },
+  },
+  {
+    name: "H. Vardhan Reddy",
+    basePrice: 600,
+    batting: { runs: 0, sr: 0.0, avg: 0.0, sixes: 0, fours: 0 },
+    bowling: {
+      overs: 2.0,
+      wickets: 1,
+      runs_conceded: 42,
+      maidens: 0,
+      eco: 21.0,
+      sr: 12.0,
+    },
   },
 ];
