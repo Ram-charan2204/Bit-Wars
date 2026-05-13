@@ -100,17 +100,19 @@ onValue(auctionRef, (snapshot) => {
   basePrice.innerText = `Base Price:
        ${data.currentPlayer.basePrice}`;
 
-  runs.innerText = data.currentPlayer.batting?.runs || 0;
+  // Player stats JSON uses: batting:{runs,sr,avg,sixes} and bowling:{wickets,eco}
+  // Keep safe defaults so UI still renders even if some fields are missing.
+  runs.innerText = data.currentPlayer.batting?.runs ?? 0;
 
-  strikeRate.innerText = data.currentPlayer.batting?.sr || 0;
+  strikeRate.innerText = data.currentPlayer.batting?.sr ?? 0;
 
-  average.innerText = data.currentPlayer.batting?.avg || 0;
+  average.innerText = data.currentPlayer.batting?.avg ?? 0;
 
-  wickets.innerText = data.currentPlayer.bowling?.wickets || 0;
+  wickets.innerText = data.currentPlayer.bowling?.wickets ?? 0;
 
-  economy.innerText = data.currentPlayer.bowling?.eco || 0;
+  economy.innerText = data.currentPlayer.bowling?.eco ?? 0;
 
-  sixes.innerText = data.currentPlayer.batting?.sixes || 0;
+  sixes.innerText = data.currentPlayer.batting?.sixes ?? 0;
 
   const isHighestBidder = data.highestBidder === currentTeam?.name;
 
